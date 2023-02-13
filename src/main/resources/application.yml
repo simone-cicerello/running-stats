@@ -1,0 +1,10 @@
+strava:
+  base-url: https://www.strava.com/api/v3
+  token-uri: oauth/token
+  client-id: 63357
+  client-secret: 77c5bce40da6257682d8693b9cb0ed59fa38b9a1
+  code: 83e1c94fb3ca0becec6d5e13136ac2ba8c9ce71e
+  grant-type-auth: authorization_code
+  grant-type-refresh: refresh_code
+  athlete-url: athlete
+  athlete-activities-url: athlete/activities
