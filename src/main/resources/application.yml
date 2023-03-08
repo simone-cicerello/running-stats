@@ -1,3 +1,6 @@
+server:
+  port: 8088
+
 strava:
   base-url: https://www.strava.com/api/v3
   token-uri: oauth/token
