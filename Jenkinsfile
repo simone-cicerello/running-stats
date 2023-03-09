@@ -1,8 +1,8 @@
 pipeline {
 	agent any
     tools {
-         maven 'Maven 3.9.0'
-         jdk 'OpenJDK 17'
+         maven 'maven-3.9.0'
+         jdk 'java-17'
     }
     stages {
 		stage('Pull from git'){
