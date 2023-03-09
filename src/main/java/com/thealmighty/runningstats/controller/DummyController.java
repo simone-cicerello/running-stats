@@ -17,7 +17,7 @@ public class DummyController {
 
     @GetMapping("greetings")
     public String greetings() {
-        return "Greetings from running-stats";
+        return "Greetings from running-stats!";
     }
 
     @RequestMapping(value = "echo",
