@@ -16,7 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("running-stats/api")
 @Slf4j
-public class Controller {
+public class MainController {
 
     @Autowired
     private StravaService stravaService;
