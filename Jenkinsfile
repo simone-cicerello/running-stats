@@ -41,7 +41,7 @@ pipeline {
 	        	}
 	    	}
 	    }
-	    stage('Giving permissions to files') {
+/*	    stage('Giving permissions to files') {
             steps {
                 sshagent(credentials: ['tomcat-server-credentials']) {
                     sh 'ssh -o StrictHostKeyChecking=no ec2-user@13.53.132.177 uptime'
@@ -58,5 +58,6 @@ pipeline {
                 }
             }
         }
+        */
 	}
 }
