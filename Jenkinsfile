@@ -45,8 +45,8 @@ pipeline {
             steps {
                 sshagent(credentials: ['tomcat-server-credentials']) {
                     sh 'ssh -o StrictHostKeyChecking=no ec2-user@13.53.132.177 uptime && pwd'
-                    //sh 'chmod +x running-stats-0.0.1-SNAPSHOT.jar'
-                    //sh 'chmod +x ec2-user@13.53.132.177:~/application.yml'
+                    sh 'chmod +x /home/ec2-user/.jenkins/workspace/running-stats-decl/running-stats-0.0.1-SNAPSHOT.jar'
+                    sh 'chmod +x /home/ec2-user/.jenkins/workspace/running-stats-decl/application.yml'
                 }
             }
         }
@@ -54,7 +54,7 @@ pipeline {
             steps {
                 sshagent(credentials: ['tomcat-server-credentials']) {
                     sh 'ssh -o StrictHostKeyChecking=no ec2-user@13.53.132.177 uptime'
-                    sh 'java -jar /home/ec2-user/running-stats-0.0.1-SNAPSHOT.jar --spring.config.location=file:///home/ec2-user/application.yml'
+                    sh 'java -jar /home/ec2-user/.jenkins/workspace/running-stats-decl/running-stats-0.0.1-SNAPSHOT.jar --spring.config.location=file:///home/ec2-user/.jenkins/workspace/running-stats-decl/application.yml'
                 }
             }
         }
