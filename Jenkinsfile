@@ -17,16 +17,13 @@ pipeline {
 	           	sh "mvn clean install -DskipTests=true"
 	    	}
 	    }
- 	    /*
  	    stage('Kill existing process'){
 	    	steps {
 	   	        sshagent(credentials: ['tomcat-server-credentials']) {
-	           		sh 'ssh -o StrictHostKeyChecking=no ec2-user@13.53.132.177 uptime'
-	           		sh 'pkill -f "running-stats"'
+	           		sh "ssh -o StrictHostKeyChecking=no ec2-user@13.53.132.177 pkill -f 'running-stats'"
 	        	}
 	    	}
 	    }
-	    */
 	    stage('Push jar, application.yml and startup.sh') {
 	    	steps {
 	    	    //rsync -> funzione copia
@@ -54,7 +51,7 @@ pipeline {
          stage('Start application') {
             steps {
                 sshagent(credentials: ['tomcat-server-credentials']) {
-                    sh "ssh -o StrictHostKeyChecking=no ec2-user@13.53.132.177 ./startup.sh exit"
+                    sh "ssh -o StrictHostKeyChecking=no ec2-user@13.53.132.177 ./startup.sh && exit"
                 }
             }
         }
