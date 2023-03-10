@@ -36,8 +36,8 @@ pipeline {
 	    	    //-e ssh -> Opzione usata per specificare che si tratta di una connessione SSH
 	    	   	sshagent(credentials: ['tomcat-server-credentials']) {
                     sh 'ssh -o StrictHostKeyChecking=no ec2-user@13.53.132.177 uptime'
-	            	sh 'rsync -avz -e ssh target/running-stats-0.0.1-SNAPSHOT.jar running-stats-0.0.1-SNAPSHOT.jar'
-	            	sh 'rsync -avz -e ssh src/main/resources/application.yml application.yml'
+	            	sh 'rsync -avz -e ssh target/running-stats-0.0.1-SNAPSHOT.jar ec2-user@13.53.132.177:/home/ec2-user/running-stats-0.0.1-SNAPSHOT.jar'
+	            	sh 'rsync -avz -e ssh src/main/resources/application.yml ec2-user@13.53.132.177:/home/ec2-user/application.yml'
 	        	}
 	    	}
 	    }
