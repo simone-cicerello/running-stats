@@ -51,7 +51,7 @@ pipeline {
          stage('Start application') {
             steps {
                 sshagent(credentials: ['tomcat-server-credentials']) {
-                    sh "ssh -o StrictHostKeyChecking=no ec2-user@13.53.132.177 ./startup.sh \&"
+                    sh "ssh -o StrictHostKeyChecking=no ec2-user@13.53.132.177 nohup ./startup.sh &"
                 }
             }
         }
