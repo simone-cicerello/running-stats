@@ -17,6 +17,7 @@ pipeline {
 	           	sh "mvn clean install -DskipTests=true"
 	    	}
 	    }
+ 	    /*
  	    stage('Kill existing process'){
 	    	steps {
 	   	        sshagent(credentials: ['tomcat-server-credentials']) {
@@ -25,6 +26,7 @@ pipeline {
 	        	}
 	    	}
 	    }
+	    */
 	    stage('Push jar and application.yml') {
 	    	steps {
 	    	    //rsync -> funzione copia
@@ -41,7 +43,8 @@ pipeline {
 	        	}
 	    	}
 	    }
-	/*    stage('Giving permissions to files') {
+	    /*
+	    stage('Giving permissions to files') {
             steps {
                 sshagent(credentials: ['tomcat-server-credentials']) {
                     sh 'ssh -o StrictHostKeyChecking=no ec2-user@13.53.132.177 uptime && pwd'
@@ -50,7 +53,7 @@ pipeline {
                 }
             }
         }
-    */
+        */
          stage('Start application') {
             steps {
                 sshagent(credentials: ['tomcat-server-credentials']) {
