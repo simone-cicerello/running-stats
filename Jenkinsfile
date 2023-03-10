@@ -47,9 +47,9 @@ pipeline {
 	    stage('Giving permissions to files') {
             steps {
                 sshagent(credentials: ['tomcat-server-credentials']) {
-                    sh 'ssh -o StrictHostKeyChecking=no ec2-user@13.53.132.177 uptime && pwd'
+                    sh 'ssh -o StrictHostKeyChecking=no ec2-user@13.53.132.177 uptime'
                     //sh 'chmod +x /home/ec2-user/.jenkins/workspace/running-stats-decl/running-stats-0.0.1-SNAPSHOT.jar'
-                    sh 'sudo chmod +x /home/ec2-user/.jenkins/workspace/running-stats-decl/startup.sh'
+                    sh 'sudo chmod +x /home/ec2-user/startup.sh'
                 }
             }
         }
@@ -57,7 +57,6 @@ pipeline {
             steps {
                 sshagent(credentials: ['tomcat-server-credentials']) {
                     sh 'ssh -o StrictHostKeyChecking=no ec2-user@13.53.132.177 uptime'
-                    sh 'cd /home/ec2-user/.jenkins/workspace/running-stats-decl/'
                     sh 'pwd'
                     sh "nohup ./startup.sh &> /dev/null && exit"
                 }
