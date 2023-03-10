@@ -41,7 +41,7 @@ pipeline {
 	        	}
 	    	}
 	    }
-	    stage('Giving permissions to files') {
+	/*    stage('Giving permissions to files') {
             steps {
                 sshagent(credentials: ['tomcat-server-credentials']) {
                     sh 'ssh -o StrictHostKeyChecking=no ec2-user@13.53.132.177 uptime && pwd'
@@ -49,8 +49,8 @@ pipeline {
                     sh 'chmod +x /home/ec2-user/.jenkins/workspace/running-stats-decl/application.yml'
                 }
             }
-        }
-/*         stage('Start application') {
+        } */
+         stage('Start application') {
             steps {
                 sshagent(credentials: ['tomcat-server-credentials']) {
                     sh 'ssh -o StrictHostKeyChecking=no ec2-user@13.53.132.177 uptime'
@@ -58,6 +58,5 @@ pipeline {
                 }
             }
         }
-        */
 	}
 }
