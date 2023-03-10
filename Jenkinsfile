@@ -37,28 +37,28 @@ pipeline {
 	    	    //-z -> Dice a rsync di comprimere i dati trasmessi
 	    	    //-e ssh -> Opzione usata per specificare che si tratta di una connessione SSH
 	    	   	sshagent(credentials: ['tomcat-server-credentials']) {
-                    sh 'ssh -o StrictHostKeyChecking=no ec2-user@13.53.132.177 uptime'
-	            	sh 'rsync -avz -e ssh target/running-stats-0.0.1-SNAPSHOT.jar ec2-user@13.53.132.177:/home/ec2-user/running-stats-0.0.1-SNAPSHOT.jar'
-	            	sh 'rsync -avz -e ssh src/main/resources/application.yml ec2-user@13.53.132.177:/home/ec2-user/application.yml'
-	            	sh 'rsync -avz -e ssh startup.sh ec2-user@13.53.132.177:/home/ec2-user/startup.sh'
+                    sh "ssh -o StrictHostKeyChecking=no ec2-user@13.53.132.177 uptime"
+	            	sh "rsync -avz -e ssh target/running-stats-0.0.1-SNAPSHOT.jar ec2-user@13.53.132.177:/home/ec2-user/running-stats-0.0.1-SNAPSHOT.jar"
+	            	sh "rsync -avz -e ssh src/main/resources/application.yml ec2-user@13.53.132.177:/home/ec2-user/application.yml"
+	            	sh "rsync -avz -e ssh startup.sh ec2-user@13.53.132.177:/home/ec2-user/startup.sh"
 	        	}
 	    	}
 	    }
 	    stage('Giving permissions to files') {
             steps {
                 sshagent(credentials: ['tomcat-server-credentials']) {
-                    sh 'ssh -o StrictHostKeyChecking=no ec2-user@13.53.132.177 uptime'
+                    sh "ssh -o StrictHostKeyChecking=no ec2-user@13.53.132.177 sudo chmod +x /home/ec2-user/startup.sh"
                     //sh 'chmod +x /home/ec2-user/.jenkins/workspace/running-stats-decl/running-stats-0.0.1-SNAPSHOT.jar'
-                    sh 'ssh -o StrictHostKeyChecking=no ec2-user@13.53.132.177 && sudo chmod +x /home/ec2-user/startup.sh'
+                    //sh 'ssh -o StrictHostKeyChecking=no ec2-user@13.53.132.177 && '
                 }
             }
         }
          stage('Start application') {
             steps {
                 sshagent(credentials: ['tomcat-server-credentials']) {
-                    sh 'ssh -o StrictHostKeyChecking=no ec2-user@13.53.132.177 uptime'
-                    sh 'ssh -o StrictHostKeyChecking=no ec2-user@13.53.132.177 && pwd'
-                    sh "ssh -o StrictHostKeyChecking=no ec2-user@13.53.132.177 && nohup ./startup.sh &> /dev/null && exit"
+                    //sh 'ssh -o StrictHostKeyChecking=no ec2-user@13.53.132.177 uptime'
+                    //sh 'ssh -o StrictHostKeyChecking=no ec2-user@13.53.132.177 && pwd'
+                    sh "ssh -o StrictHostKeyChecking=no ec2-user@13.53.132.177 nohup ./startup.sh &> /dev/null"
                 }
             }
         }
