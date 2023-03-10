@@ -45,8 +45,8 @@ pipeline {
             steps {
                 sshagent(credentials: ['tomcat-server-credentials']) {
                     sh 'ssh -o StrictHostKeyChecking=no ec2-user@13.53.132.177 uptime'
-                    sh 'chmod +x ec2-user@13.53.132.177:./running-stats-0.0.1-SNAPSHOT.jar'
-                    sh 'chmod +x ec2-user@13.53.132.177:./application.yml'
+                    sh 'chmod +x ec2-user@13.53.132.177:~/running-stats-0.0.1-SNAPSHOT.jar'
+                    sh 'chmod +x ec2-user@13.53.132.177:~/application.yml'
                 }
             }
         }
