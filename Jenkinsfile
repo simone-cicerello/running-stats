@@ -27,7 +27,7 @@ pipeline {
 	    	}
 	    }
 	    */
-	    stage('Push jar and application.yml') {
+	    stage('Push jar, application.yml and startup.sh') {
 	    	steps {
 	    	    //rsync -> funzione copia
 	    	    //-a -> Significa archive. Questa modalità corrisponde a scrivere -rlptgoD e riporta tutte le condizioni
@@ -40,26 +40,24 @@ pipeline {
                     sh 'ssh -o StrictHostKeyChecking=no ec2-user@13.53.132.177 uptime'
 	            	sh 'rsync -avz -e ssh target/running-stats-0.0.1-SNAPSHOT.jar ec2-user@13.53.132.177:/home/ec2-user/running-stats-0.0.1-SNAPSHOT.jar'
 	            	sh 'rsync -avz -e ssh src/main/resources/application.yml ec2-user@13.53.132.177:/home/ec2-user/application.yml'
+	            	sh 'rsync -avz -e ssh startup.sh ec2-user@13.53.132.177:/home/ec2-user/startup.sh'
 	        	}
 	    	}
 	    }
-	    /*
 	    stage('Giving permissions to files') {
             steps {
                 sshagent(credentials: ['tomcat-server-credentials']) {
                     sh 'ssh -o StrictHostKeyChecking=no ec2-user@13.53.132.177 uptime && pwd'
-                    sh 'chmod +x /home/ec2-user/.jenkins/workspace/running-stats-decl/running-stats-0.0.1-SNAPSHOT.jar'
-                    sh 'chmod +x /home/ec2-user/.jenkins/workspace/running-stats-decl/application.yml'
+                    //sh 'chmod +x /home/ec2-user/.jenkins/workspace/running-stats-decl/running-stats-0.0.1-SNAPSHOT.jar'
+                    sh 'sudo chmod +x /home/ec2-user/.jenkins/workspace/running-stats-decl/startup.sh'
                 }
             }
         }
-        */
          stage('Start application') {
             steps {
                 sshagent(credentials: ['tomcat-server-credentials']) {
                     sh 'ssh -o StrictHostKeyChecking=no ec2-user@13.53.132.177 uptime'
-                    sh 'nohup java -jar /home/ec2-user/.jenkins/workspace/running-stats-decl/running-stats-0.0.1-SNAPSHOT.jar --spring.config.location=file:///home/ec2-user/.jenkins/workspace/running-stats-decl/application.yml &> /dev/null'
-                    sh 'echo "complete!"'
+                    sh 'nohup /home/ec2-user/.jenkins/workspace/running-stats-decl/startup.sh &> /dev/null'
                 }
             }
         }
