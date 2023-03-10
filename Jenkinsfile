@@ -54,7 +54,8 @@ pipeline {
          stage('Start application') {
             steps {
                 sshagent(credentials: ['tomcat-server-credentials']) {
-                    sh 'ssh -of StrictHostKeyChecking=no ec2-user@13.53.132.177 uptime'
+                    sh 'ssh -o StrictHostKeyChecking=no ec2-user@13.53.132.177 uptime'
+                    sh 'ssh -f ec2-user@13.53.132.177'
                     sh 'java -jar /home/ec2-user/.jenkins/workspace/running-stats-decl/running-stats-0.0.1-SNAPSHOT.jar --spring.config.location=file:///home/ec2-user/.jenkins/workspace/running-stats-decl/application.yml'
                 }
             }
