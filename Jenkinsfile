@@ -59,7 +59,7 @@ pipeline {
                     sh 'ssh -o StrictHostKeyChecking=no ec2-user@13.53.132.177 uptime'
                     sh 'cd /home/ec2-user/.jenkins/workspace/running-stats-decl/'
                     sh 'pwd'
-                    sh 'nohup ./startup.sh &> /dev/null'
+                    sh "nohup ./startup.sh &> /dev/null && exit"
                 }
             }
         }
