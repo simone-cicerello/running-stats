@@ -17,14 +17,14 @@ pipeline {
 	           	sh "mvn clean install -DskipTests=true"
 	    	}
 	    }
-/* 	    stage('Kill existing process'){
+ 	    stage('Kill existing process'){
 	    	steps {
 	   	        sshagent(credentials: ['tomcat-server-credentials']) {
 	           		sh 'ssh -o StrictHostKeyChecking=no ec2-user@13.53.132.177 uptime'
 	           		sh 'pkill -f "running-stats"'
 	        	}
 	    	}
-	    } */
+	    }
 	    stage('Push jar and application.yml') {
 	    	steps {
 	    	    //rsync -> funzione copia
@@ -55,8 +55,8 @@ pipeline {
             steps {
                 sshagent(credentials: ['tomcat-server-credentials']) {
                     sh 'ssh -o StrictHostKeyChecking=no ec2-user@13.53.132.177 uptime'
-                    sh 'ssh -f ec2-user@13.53.132.177'
-                    sh 'java -jar /home/ec2-user/.jenkins/workspace/running-stats-decl/running-stats-0.0.1-SNAPSHOT.jar --spring.config.location=file:///home/ec2-user/.jenkins/workspace/running-stats-decl/application.yml'
+                    //sh 'ssh -f ec2-user@13.53.132.177'
+                    sh 'nohup java -jar /home/ec2-user/.jenkins/workspace/running-stats-decl/running-stats-0.0.1-SNAPSHOT.jar --spring.config.location=file:///home/ec2-user/.jenkins/workspace/running-stats-decl/application.yml'
                 }
             }
         }
