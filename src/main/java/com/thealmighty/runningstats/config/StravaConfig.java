@@ -1,38 +1,33 @@
 package com.thealmighty.runningstats.config;
 
-import lombok.Data;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
-
 @Configuration
-@Data
+@Getter
 public class StravaConfig {
 
-    @Value("${strava.base-url}")
-    private String stravaBaseUrl;
+  // URIs
+  @Value("${strava.baseUrl}")
+  private String stravaBaseUrl;
 
-    @Value("${strava.token-uri}")
-    private String stravaTokenUri;
+  @Value("${strava.athleteUrl}")
+  private String stravaAthleteUrl;
 
-    @Value("${strava.client-id}")
-    private String stravaClientId;
+  @Value("${strava.athleteActivitiesUrl}")
+  private String stravaAthleteActivitiesUrl;
 
-    @Value("${strava.client-secret}")
-    private String stravaClientSecret;
+  @Value("${strava.tokenUri}")
+  private String tokenUri;
 
-    @Value("${strava.code}")
-    private String stravaTempCode;
+  // Auth stuffs
+  @Value("${clientId}")
+  private String clientId;
 
-    @Value("${strava.grant-type-auth}")
-    private String stravaGrantTypeAuth;
+  @Value("${clientSecret}")
+  private String clientSecret;
 
-    @Value("${strava.grant-type-refresh}")
-    private String stravaGrantTypeRefresh;
-
-    @Value("${strava.athlete-url}")
-    private String stravaAthleteUrl;
-
-    @Value("${strava.athlete-activities-url}")
-    private String stravaAthleteActivitiesUrl;
+  @Value("${grantTypeRefresh}")
+  private String grantTypeRefresh;
 }

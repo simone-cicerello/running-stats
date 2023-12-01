@@ -1,16 +1,10 @@
 package com.thealmighty.runningstats.exception.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.List;
 import lombok.Data;
 
-import java.io.Serializable;
-
 @Data
-public class Fault implements Serializable {
-
-    @JsonProperty("errors")
-    private Error errors;
-
-    @JsonProperty("message")
-    private String message;
+public class Fault {
+  private List<Errors> errors;
+  private String message;
 }
