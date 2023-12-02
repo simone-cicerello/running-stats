@@ -5,6 +5,7 @@ import com.thealmighty.runningstats.config.AuthConfig;
 import com.thealmighty.runningstats.config.StravaConfig;
 import com.thealmighty.runningstats.exception.UtilException;
 import com.thealmighty.runningstats.model.STokenRespModel;
+import com.thealmighty.runningstats.service.util.ServiceUtils;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -13,7 +14,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
-import java.time.Instant;
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -30,6 +31,8 @@ public class STokenService {
 
   private StravaConfig stravaConfig;
 
+  private ServiceUtils serviceUtils;
+
   @Autowired
   public void setAuthConfig(AuthConfig authConfig) {
     this.authConfig = authConfig;
@@ -40,15 +43,24 @@ public class STokenService {
     this.stravaConfig = stravaConfig;
   }
 
-  private boolean isTokenExpired(Long expiresAt) {
-    return expiresAt <= Instant.now().getEpochSecond();
+  @Autowired
+  public void setServiceUtils(ServiceUtils serviceUtils) {
+    this.serviceUtils = serviceUtils;
   }
 
   public String getStravaToken() {
+    log.debug("Checking for expiration date...");
     if (Strings.isBlank(authConfig.getExpiresAt())
-        || isTokenExpired(Long.valueOf(authConfig.getExpiresAt()))) {
+        || serviceUtils.isTokenExpired(Long.valueOf(authConfig.getExpiresAt()))) {
+      log.debug(
+          "Expiration date is null or {}",
+          authConfig.getExpiresAt() != null
+              ? new Timestamp(Long.parseLong(authConfig.getExpiresAt()))
+              : "");
+      log.debug("Needed new token...");
       fetchAccessTokenBySecretUnirest();
     }
+    log.debug("Getting the existing token {}", authConfig.getCurrentToken());
     return authConfig.getCurrentToken();
   }
 
