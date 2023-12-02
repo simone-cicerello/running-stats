@@ -45,9 +45,8 @@ public class AuthConfig {
       OutputStream out = new FileOutputStream(f);
       DefaultPropertiesPersister p = new DefaultPropertiesPersister();
       p.store(props, out, "");
-    } catch (Exception e ) {
+    } catch (Exception e) {
       throw new UtilException(e.getMessage());
     }
   }
 }
-
