@@ -15,9 +15,14 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,5 +106,12 @@ public class STokenService {
       log.error(e.getMessage());
       throw new UtilException(e.getMessage(), e.getCause());
     }
+  }
+
+  @PostConstruct
+  private void infoToken(){
+    Instant instant = Instant.ofEpochSecond(Long.parseLong(authConfig.getExpiresAt()));
+    var expireDate = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
+    log.info("Existing token expires on {}", serviceUtils.formatDate(expireDate));
   }
 }

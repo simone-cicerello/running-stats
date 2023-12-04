@@ -21,7 +21,7 @@ public class ServiceUtils {
     return expireDate.isBefore(now) || expireDate.isEqual(now);
   }
 
-  private String formatDate(LocalDateTime dateToFormat) {
+  public String formatDate(LocalDateTime dateToFormat) {
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern(DATE_PATTERN);
     return dtf.format(dateToFormat);
   }
